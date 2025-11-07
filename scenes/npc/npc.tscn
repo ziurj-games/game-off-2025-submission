@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://cwfaw2e74004j"]
+
+[ext_resource type="Script" uid="uid://b4lh0i0o5rth7" path="res://scenes/npc/NPC.cs" id="1_sspvn"]
+[ext_resource type="Resource" uid="uid://2qe5thd6scu3" path="res://resources/wave/wave_res.tres" id="2_pcwmf"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ilwad"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ilwad"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ldao0"]
+material = SubResource("StandardMaterial3D_ilwad")
+size = Vector3(0.5, 0.1, 0.1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0vhbo"]
+
+[node name="NPC" type="CharacterBody3D"]
+script = ExtResource("1_sspvn")
+WaveRes = ExtResource("2_pcwmf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_ilwad")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5850501, 0.49247885)
+mesh = SubResource("BoxMesh_ldao0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_0vhbo")

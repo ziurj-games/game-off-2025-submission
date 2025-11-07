@@ -1,0 +1,191 @@
+[gd_scene load_steps=18 format=3 uid="uid://dapqwdtrxrenp"]
+
+[ext_resource type="PackedScene" uid="uid://bwxdkrw6bj522" path="res://scenes/player/player.tscn" id="1_0vhbo"]
+[ext_resource type="Script" uid="uid://be5h2sreik2kj" path="res://scripts/GameManager.cs" id="1_ldao0"]
+[ext_resource type="PackedScene" uid="uid://cwfaw2e74004j" path="res://scenes/npc/npc.tscn" id="2_0vhbo"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_55n5f"]
+size = Vector3(400, 400, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ilwad"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0vhbo"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wg11f"]
+size = Vector3(2, 3.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yb8kn"]
+albedo_color = Color(0.599985, 0.6184497, 0.61393696, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_43k3a"]
+material = SubResource("StandardMaterial3D_yb8kn")
+radius = 0.167
+height = 0.333
+
+[sub_resource type="Environment" id="Environment_ilwad"]
+tonemap_mode = 4
+ssao_enabled = true
+ssao_radius = 1.69
+ssao_intensity = 1.31
+ssao_power = 1.399549
+ssao_detail = 0.72
+ssao_horizon = 0.28
+ssil_enabled = true
+glow_enabled = true
+fog_enabled = true
+fog_light_energy = 0.31
+fog_density = 0.005
+fog_sky_affect = 0.0
+volumetric_fog_density = 0.0285
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ldao0"]
+dof_blur_far_enabled = true
+dof_blur_near_enabled = true
+dof_blur_amount = 0.02
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0vhbo"]
+albedo_color = Color(0.40392157, 0.40392157, 0.40392157, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_68ya3"]
+material = SubResource("StandardMaterial3D_0vhbo")
+size = Vector3(20, 40, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wg11f"]
+albedo_color = Color(0.11373039, 0.18633118, 0.059778437, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yb8kn"]
+material = SubResource("StandardMaterial3D_wg11f")
+size = Vector3(20, 4, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_43k3a"]
+albedo_color = Color(0.7977205, 0.86698216, 0.7396099, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ttu8v"]
+material = SubResource("StandardMaterial3D_43k3a")
+size = Vector3(20, 4, 0.5)
+
+[node name="MainLevel" type="Node3D" node_paths=PackedStringArray("_playerSpawnPos", "_npcSpawnPos", "_playersContainer")]
+script = ExtResource("1_ldao0")
+_playerScene = ExtResource("1_0vhbo")
+_npcScene = ExtResource("2_0vhbo")
+_playerSpawnPos = NodePath("RoomElements/PlayerSpawnPosition")
+_npcSpawnPos = NodePath("RoomElements/Chair3/NPCSitPosition")
+_playersContainer = NodePath("Players")
+
+[node name="SkyBlocker" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 184.65707, 0)
+mesh = SubResource("BoxMesh_55n5f")
+
+[node name="RoomElements" type="Node3D" parent="."]
+
+[node name="Table" type="MeshInstance3D" parent="RoomElements"]
+transform = Transform3D(3.0800002, 0, 0, 0, 0.12, 0, 0, 0, 1.1, 0, 1.1619225, 0.112627506)
+mesh = SubResource("BoxMesh_ilwad")
+skeleton = NodePath("../../RoomShape")
+
+[node name="Chair3" type="Node3D" parent="RoomElements"]
+
+[node name="NPCSitPosition" type="Marker3D" parent="RoomElements/Chair3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71992624, -1.0604231)
+
+[node name="Chair" type="MeshInstance3D" parent="RoomElements/Chair3"]
+transform = Transform3D(0.83160007, 0, 0, 0, 0.12, 0, 0, 0, 0.77, 0, 0.54418683, -1.1536462)
+mesh = SubResource("BoxMesh_0vhbo")
+skeleton = NodePath("../../../RoomShape")
+
+[node name="Chair2" type="MeshInstance3D" parent="RoomElements/Chair3"]
+transform = Transform3D(0.8316, 0, 0, 0, -0.012198595, 0.9923824, 0, -0.12369941, -0.09786359, 0, 1.0510933, -1.5711792)
+mesh = SubResource("BoxMesh_0vhbo")
+skeleton = NodePath("../../../RoomShape")
+
+[node name="NPCSpawnPosition" type="Marker3D" parent="RoomElements"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+
+[node name="PlayerSpawnPosition" type="Marker3D" parent="RoomElements"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1.7238412)
+
+[node name="Door" type="MeshInstance3D" parent="RoomElements"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6854868, -10.134851)
+mesh = SubResource("BoxMesh_wg11f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomElements/Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.71369827, -0.0791657, 0.25933933)
+mesh = SubResource("SphereMesh_43k3a")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="RoomElements"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10.617548, 0)
+light_energy = 7.598
+shadow_enabled = true
+shadow_blur = 0.175
+spot_range = 14.998
+spot_attenuation = 0.79
+spot_angle = 52.09
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="RoomElements"]
+environment = SubResource("Environment_ilwad")
+camera_attributes = SubResource("CameraAttributesPractical_ldao0")
+
+[node name="RoomShape" type="Node3D" parent="."]
+
+[node name="Ground" type="MeshInstance3D" parent="RoomShape"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.2530899, -7)
+mesh = SubResource("BoxMesh_68ya3")
+skeleton = NodePath("../..")
+
+[node name="Ceiling" type="MeshInstance3D" parent="RoomShape"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 7.74691, 0)
+visible = false
+mesh = SubResource("BoxMesh_55n5f")
+skeleton = NodePath("../..")
+
+[node name="LowerWalls" type="Node3D" parent="RoomShape"]
+
+[node name="FrontWall" type="MeshInstance3D" parent="RoomShape/LowerWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -10.25)
+mesh = SubResource("BoxMesh_yb8kn")
+skeleton = NodePath("../../..")
+
+[node name="BackWall" type="MeshInstance3D" parent="RoomShape/LowerWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 10.25)
+mesh = SubResource("BoxMesh_yb8kn")
+skeleton = NodePath("../../..")
+
+[node name="RightWall" type="MeshInstance3D" parent="RoomShape/LowerWalls"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 10.25, 1.5, 0)
+mesh = SubResource("BoxMesh_yb8kn")
+skeleton = NodePath("../../..")
+
+[node name="LeftWall" type="MeshInstance3D" parent="RoomShape/LowerWalls"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10.25, 1.5, 0)
+mesh = SubResource("BoxMesh_yb8kn")
+skeleton = NodePath("../../..")
+
+[node name="UpperWalls" type="Node3D" parent="RoomShape"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+
+[node name="FrontWall" type="MeshInstance3D" parent="RoomShape/UpperWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -10.25)
+mesh = SubResource("BoxMesh_ttu8v")
+skeleton = NodePath("../../..")
+
+[node name="BackWall" type="MeshInstance3D" parent="RoomShape/UpperWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 10.25)
+mesh = SubResource("BoxMesh_ttu8v")
+skeleton = NodePath("../../..")
+
+[node name="RightWall" type="MeshInstance3D" parent="RoomShape/UpperWalls"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 10.25, 1.5, 0)
+mesh = SubResource("BoxMesh_ttu8v")
+skeleton = NodePath("../../..")
+
+[node name="LeftWall" type="MeshInstance3D" parent="RoomShape/UpperWalls"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10.25, 1.5, 0)
+mesh = SubResource("BoxMesh_ttu8v")
+skeleton = NodePath("../../..")
+
+[node name="Players" type="Node3D" parent="."]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7057595, 0)
+visible = false
+omni_range = 12.076107

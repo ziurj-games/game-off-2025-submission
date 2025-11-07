@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwxdkrw6bj522"]
+
+[ext_resource type="Script" uid="uid://b6eel8rmihksv" path="res://scenes/player/Player.cs" id="1_8afob"]
+[ext_resource type="Resource" uid="uid://2qe5thd6scu3" path="res://resources/wave/wave_res.tres" id="2_dovo2"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_playerInterface")]
+script = ExtResource("1_8afob")
+_playerInterface = NodePath("PlayerInterface")
+WaveRes = ExtResource("2_dovo2")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+current = true
+fov = 90.0
+
+[node name="PlayerInterface" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerInterface"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -79.0
+offset_top = -243.0
+offset_right = 79.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="WaveChoiceLabel" type="Label" parent="PlayerInterface/VBoxContainer"]
+layout_mode = 2
+text = "Choose a Wave"
+horizontal_alignment = 1
+
+[node name="NormalWaveButton" type="Button" parent="PlayerInterface/VBoxContainer"]
+layout_mode = 2
+text = "Normal Wave"
+
+[node name="RoyalWaveButton" type="Button" parent="PlayerInterface/VBoxContainer"]
+layout_mode = 2
+text = "Royal Wave"
+
+[node name="EnthusiasticWaveButton" type="Button" parent="PlayerInterface/VBoxContainer"]
+layout_mode = 2
+text = "Enthusiastic Wave"
+
+[node name="FingerWiggleWave" type="Button" parent="PlayerInterface/VBoxContainer"]
+layout_mode = 2
+text = "Finger Wiggle Wave"
+
+[connection signal="pressed" from="PlayerInterface/VBoxContainer/NormalWaveButton" to="." method="ButtonPressed" binds= ["Normal Wave"]]
+[connection signal="pressed" from="PlayerInterface/VBoxContainer/RoyalWaveButton" to="." method="ButtonPressed" binds= ["Royal Wave"]]
+[connection signal="pressed" from="PlayerInterface/VBoxContainer/EnthusiasticWaveButton" to="." method="ButtonPressed" binds= ["Enthusiastic Wave"]]
+[connection signal="pressed" from="PlayerInterface/VBoxContainer/FingerWiggleWave" to="." method="ButtonPressed" binds= ["Finger Wiggle Wave"]]
