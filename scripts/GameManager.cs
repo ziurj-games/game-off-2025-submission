@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using System.Diagnostics.Contracts;
-using System.Threading.Tasks;
 
 public partial class GameManager : Node
 {
