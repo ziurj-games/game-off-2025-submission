@@ -9,6 +9,9 @@ public partial class Player : Actionable
     [Export]
     private ActionTargetSlider _targetSlider;
 
+    [Signal]
+    private delegate void GeneratedWaveResEventHandler();
+
     public override void _Ready()
     {
         base._Ready();
@@ -64,15 +67,18 @@ public partial class Player : Actionable
 
     private async Task UpdateAndEmitWaveResourceAsync(string selectedWave)
     {
-        GD.Print("ASYNC REACHEd");
+        // GD.Print("ASYNC REACHEd");
+
+        // DO THIS FKING BEFORE BECAUSE THE IF STATEMENT IS MAKING A LOCAL COPY? -- THIS WAS ANNOYING...
+        await ToSignal(this, nameof(GeneratedWaveRes)); // Wait before alerting the game manager we have finished.
 
         // WaveRes is inherited.
         if (WaveRes is Wave waveResource)
         {
+            // GD.PrintS($"[PRE-UPDATE EMIT] WAVE RESOURCE: {waveResource.WaveType} // {waveResource.TargetSliderFinalValue} ");
             waveResource.WaveType = selectedWave;
-            await ToSignal(_targetSlider, nameof(_targetSlider.SliderStopped)); // Wait before alerting the game manager we have finished.
             EmitSignal(nameof(TurnSignal), [ waveResource ]);
-            GD.PrintS($"WAVE RESOURCE: {waveResource.WaveType} // {waveResource.TargetSliderFinalValue} ");
+            GD.PrintS($"[UPDATE EMIT] WAVE RESOURCE: {waveResource.WaveType} // {waveResource.TargetSliderFinalValue} ");
         }
     }
 
@@ -84,5 +90,9 @@ public partial class Player : Actionable
         };
 
         WaveRes = newWaveRes;
+        Wave res = WaveRes as Wave;
+
+        // GD.PrintS($"[GEN WAVE] RESOURCE: {res.WaveType} // {res.TargetSliderFinalValue} ");
+        EmitSignal(nameof(GeneratedWaveRes));
     }
 }

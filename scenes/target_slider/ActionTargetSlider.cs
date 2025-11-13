@@ -26,8 +26,10 @@ public partial class ActionTargetSlider : Node2D
 
     private void HandlePinStopped()
     {
-        GD.PrintS($"PIN STOPPED {(int)currentPinPosition}");
-        EmitSignal(nameof(SliderStopped), (int)currentPinPosition);
+        int lockedPinPosition = (int)currentPinPosition;
+
+        GD.PrintS($"PIN STOPPED {lockedPinPosition}");
+        EmitSignal(nameof(SliderStopped), lockedPinPosition);
     }
 
     public void Enable()
@@ -38,6 +40,7 @@ public partial class ActionTargetSlider : Node2D
     public void Reset()
     {
         _pin.ResetPin();
+        currentPinPosition = PinPosition.IN_GRAY_AREA;
     }
 
 	private void AreaEnteredSweetSpot(Area2D area) 
