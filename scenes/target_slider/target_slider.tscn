@@ -38,21 +38,22 @@ shape = SubResource("RectangleShape2D_2cym6")
 [node name="Sprite2D" type="Sprite2D" parent="OuterArea"]
 texture = ExtResource("4_ubvx2")
 
-[node name="SweetSpot" type="Area2D" parent="."]
+[node name="SweetSpot" type="Area2D" parent="OuterArea"]
 collision_layer = 0
 collision_mask = 32768
 
-[node name="Sprite2D" type="Sprite2D" parent="SweetSpot"]
+[node name="Sprite2D" type="Sprite2D" parent="OuterArea/SweetSpot"]
 texture = ExtResource("3_cmhkb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SweetSpot"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OuterArea/SweetSpot"]
 shape = SubResource("RectangleShape2D_mh6fn")
 
 [node name="Pin" type="Area2D" parent="." node_paths=PackedStringArray("_leftLimit", "_rightLimit") groups=["pin"]]
+position = Vector2(-384, 0)
 collision_layer = 32768
 collision_mask = 0
 script = ExtResource("3_42uq2")
-PinSpeed = 200.0
+PinSpeed = 425.0
 _leftLimit = NodePath("../LeftLimit")
 _rightLimit = NodePath("../RightLimit")
 
@@ -71,5 +72,5 @@ position = Vector2(456, 0)
 
 [connection signal="area_entered" from="OuterArea" to="." method="OuterAreaPinEntered"]
 [connection signal="area_exited" from="OuterArea" to="." method="OuterAreaPinExited"]
-[connection signal="area_entered" from="SweetSpot" to="." method="AreaEnteredSweetSpot"]
-[connection signal="area_exited" from="SweetSpot" to="." method="AreaExitedSweetSpot"]
+[connection signal="area_entered" from="OuterArea/SweetSpot" to="." method="AreaEnteredSweetSpot"]
+[connection signal="area_exited" from="OuterArea/SweetSpot" to="." method="AreaExitedSweetSpot"]
