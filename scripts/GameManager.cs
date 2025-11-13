@@ -83,7 +83,7 @@ public partial class GameManager : Node
 
     private void HandlePlayerTurn()
 	{
-        Player.EnableInterface(true);
+        Player.EnableWaveOptionsInterface(true);
 
         ConnectTurnSignal(Player);
         ConnectTurnSignal(CurrentNPC, false);
