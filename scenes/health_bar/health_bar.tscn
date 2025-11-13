@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfvi8klt5lnna"]
+
+[ext_resource type="Script" uid="uid://db8fshkdhwfr0" path="res://scenes/health_bar/HealthBar.cs" id="1_4bdbx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kc21f"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2c4nj"]
+bg_color = Color(0, 0.729412, 0.0352941, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="HealthBar" type="Node3D" node_paths=PackedStringArray("_healthBar", "_hbSprite")]
+script = ExtResource("1_4bdbx")
+_healthBar = NodePath("SubViewportContainer/SubViewport/ProgressBar")
+_hbSprite = NodePath("HBSprite")
+
+[node name="HBSprite" type="Sprite3D" parent="."]
+billboard = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+visibility_layer = 0
+offset_right = 180.0
+offset_bottom = 27.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+canvas_cull_mask = 4294966273
+size = Vector2i(180, 15)
+render_target_update_mode = 4
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewportContainer/SubViewport"]
+custom_minimum_size = Vector2(180, 15)
+offset_right = 180.0
+offset_bottom = 15.0
+theme_override_styles/background = SubResource("StyleBoxFlat_kc21f")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2c4nj")
+value = 100.0
+show_percentage = false
