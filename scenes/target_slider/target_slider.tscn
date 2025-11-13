@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3 uid="uid://dpba7c58hbkre"]
+
+[ext_resource type="Script" uid="uid://cqeljdkxqlgwm" path="res://scenes/target_slider/ActionTargetSlider.cs" id="1_ubvx2"]
+[ext_resource type="Texture2D" uid="uid://b66u8xf6bj3rx" path="res://scenes/target_slider/oval_bar.png" id="1_w1pmy"]
+[ext_resource type="Texture2D" uid="uid://lpkx0l1lr158" path="res://scenes/target_slider/pin.png" id="2_jba3m"]
+[ext_resource type="Script" uid="uid://ccbksqas4kdpl" path="res://scenes/target_slider/Pin.cs" id="3_42uq2"]
+[ext_resource type="Texture2D" uid="uid://bssxhhnka21ax" path="res://scenes/target_slider/sweet_spot.jpg.png" id="3_cmhkb"]
+[ext_resource type="Script" uid="uid://c04s3x3j3mf44" path="res://scenes/target_slider/OuterArea.cs" id="4_jba3m"]
+[ext_resource type="Texture2D" uid="uid://mrvn7mlxc5a6" path="res://scenes/target_slider/second_area.jpg.png" id="4_ubvx2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2cym6"]
+size = Vector2(170, 66)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mh6fn"]
+size = Vector2(27, 102)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_42uq2"]
+radius = 11.8
+height = 146.0
+
+[node name="ActiveTargetSlider" type="Node2D" node_paths=PackedStringArray("_pin")]
+script = ExtResource("1_ubvx2")
+_pin = NodePath("Pin")
+
+[node name="Bar" type="Sprite2D" parent="."]
+texture = ExtResource("1_w1pmy")
+
+[node name="OuterArea" type="Area2D" parent="." node_paths=PackedStringArray("_sprite", "_collisionShape")]
+collision_layer = 0
+collision_mask = 32768
+script = ExtResource("4_jba3m")
+_sprite = NodePath("Sprite2D")
+_collisionShape = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OuterArea"]
+shape = SubResource("RectangleShape2D_2cym6")
+
+[node name="Sprite2D" type="Sprite2D" parent="OuterArea"]
+texture = ExtResource("4_ubvx2")
+
+[node name="SweetSpot" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32768
+
+[node name="Sprite2D" type="Sprite2D" parent="SweetSpot"]
+texture = ExtResource("3_cmhkb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SweetSpot"]
+shape = SubResource("RectangleShape2D_mh6fn")
+
+[node name="Pin" type="Area2D" parent="." node_paths=PackedStringArray("_leftLimit", "_rightLimit") groups=["pin"]]
+collision_layer = 32768
+collision_mask = 0
+script = ExtResource("3_42uq2")
+PinSpeed = 200.0
+_leftLimit = NodePath("../LeftLimit")
+_rightLimit = NodePath("../RightLimit")
+
+[node name="Sprite2D" type="Sprite2D" parent="Pin"]
+texture = ExtResource("2_jba3m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pin"]
+position = Vector2(-0.51, 0)
+shape = SubResource("CapsuleShape2D_42uq2")
+
+[node name="LeftLimit" type="Marker2D" parent="."]
+position = Vector2(-456, 0)
+
+[node name="RightLimit" type="Marker2D" parent="."]
+position = Vector2(456, 0)
+
+[connection signal="area_entered" from="OuterArea" to="." method="OuterAreaPinEntered"]
+[connection signal="area_exited" from="OuterArea" to="." method="OuterAreaPinExited"]
+[connection signal="area_entered" from="SweetSpot" to="." method="AreaEnteredSweetSpot"]
+[connection signal="area_exited" from="SweetSpot" to="." method="AreaExitedSweetSpot"]
