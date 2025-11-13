@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cwfaw2e74004j"]
+[gd_scene load_steps=8 format=3 uid="uid://cwfaw2e74004j"]
 
 [ext_resource type="Script" uid="uid://b4lh0i0o5rth7" path="res://scenes/npc/NPC.cs" id="1_sspvn"]
 [ext_resource type="Resource" uid="uid://2qe5thd6scu3" path="res://resources/wave/wave_res.tres" id="2_pcwmf"]
+[ext_resource type="PackedScene" uid="uid://dfvi8klt5lnna" path="res://scenes/health_bar/health_bar.tscn" id="3_dpyoa"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ilwad"]
 
@@ -29,3 +30,6 @@ mesh = SubResource("BoxMesh_ldao0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_0vhbo")
+
+[node name="HealthBar" parent="." instance=ExtResource("3_dpyoa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4204588, 0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dapqwdtrxrenp"]
+[gd_scene load_steps=19 format=3 uid="uid://dapqwdtrxrenp"]
 
 [ext_resource type="PackedScene" uid="uid://bwxdkrw6bj522" path="res://scenes/player/player.tscn" id="1_0vhbo"]
 [ext_resource type="Script" uid="uid://be5h2sreik2kj" path="res://scripts/GameManager.cs" id="1_ldao0"]
@@ -25,23 +25,29 @@ height = 0.333
 [sub_resource type="Environment" id="Environment_ilwad"]
 tonemap_mode = 4
 ssao_enabled = true
-ssao_radius = 1.69
-ssao_intensity = 1.31
-ssao_power = 1.399549
-ssao_detail = 0.72
-ssao_horizon = 0.28
+ssao_radius = 2.03
+ssao_intensity = 2.34
+ssao_power = 1.261345
+ssao_detail = 0.0
+ssao_horizon = 0.27
 ssil_enabled = true
+ssil_radius = 7.7
 glow_enabled = true
 fog_enabled = true
 fog_light_energy = 0.31
-fog_density = 0.005
 fog_sky_affect = 0.0
 volumetric_fog_density = 0.0285
+adjustment_enabled = true
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ldao0"]
-dof_blur_far_enabled = true
-dof_blur_near_enabled = true
-dof_blur_amount = 0.02
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ldao0"]
+albedo_color = Color(0.765603, 0.08171699, 0.10434645, 1)
+roughness = 0.62
+emission_enabled = true
+emission = Color(0.5294118, 0, 0, 1)
+emission_energy_multiplier = 10.35
+
+[sub_resource type="SphereMesh" id="SphereMesh_ldao0"]
+material = SubResource("StandardMaterial3D_ldao0")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0vhbo"]
 albedo_color = Color(0.40392157, 0.40392157, 0.40392157, 1)
@@ -104,6 +110,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
 [node name="PlayerSpawnPosition" type="Marker3D" parent="RoomElements"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1.7238412)
 
+[node name="DummyCamera" type="Camera3D" parent="RoomElements/PlayerSpawnPosition"]
+fov = 90.0
+
 [node name="Door" type="MeshInstance3D" parent="RoomElements"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6854868, -10.134851)
 mesh = SubResource("BoxMesh_wg11f")
@@ -114,6 +123,7 @@ mesh = SubResource("SphereMesh_43k3a")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="RoomElements"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10.617548, 0)
+light_color = Color(0.7524817, 0.71614987, 0.6533866, 1)
 light_energy = 7.598
 shadow_enabled = true
 shadow_blur = 0.175
@@ -123,7 +133,10 @@ spot_angle = 52.09
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="RoomElements"]
 environment = SubResource("Environment_ilwad")
-camera_attributes = SubResource("CameraAttributesPractical_ldao0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomElements"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.7115364, -3.650736)
+mesh = SubResource("SphereMesh_ldao0")
 
 [node name="RoomShape" type="Node3D" parent="."]
 

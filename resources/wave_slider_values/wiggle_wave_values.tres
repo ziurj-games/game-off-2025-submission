@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://blrr3ia6surdt"]
+
+[ext_resource type="Script" uid="uid://vxmjeemor71l" path="res://resources/wave_slider_values/WaveSliderValues.cs" id="1_u75pn"]
+
+[resource]
+script = ExtResource("1_u75pn")
+OuterWidthScale = 0.0
+OuterPositionVariance = 125.0
+PinSpeed = 1000.0
