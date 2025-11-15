@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_rgcg5")
-OuterPositionVariance = 625.0
+OuterPositionVariance = 250.0
+PinSpeed = 850.0

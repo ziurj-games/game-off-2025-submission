@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_5dood")
-OuterPositionVariance = 50.0
+OuterPositionVariance = 150.0

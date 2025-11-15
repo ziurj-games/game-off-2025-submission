@@ -6,4 +6,4 @@
 script = ExtResource("1_x0uhg")
 OuterWidthScale = 0.5
 OuterPositionVariance = 125.0
-PinSpeed = 625.0
+PinSpeed = 1250.0

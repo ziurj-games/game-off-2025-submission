@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_fxugx")
-OuterPositionVariance = 425.0
+OuterPositionVariance = 150.0
+PinSpeed = 700.0

@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_u75pn")
 OuterWidthScale = 0.0
-OuterPositionVariance = 125.0
-PinSpeed = 1000.0
+OuterPositionVariance = 175.0
+PinSpeed = 1250.0
