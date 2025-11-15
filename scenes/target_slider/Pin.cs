@@ -20,14 +20,27 @@ public partial class Pin : Area2D
         GlobalPosition = _leftLimit.GlobalPosition;
     }
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (@event.IsActionPressed("ui_accept") && _active)
-        {
-            _active = false;
-            EmitSignal(nameof(PinStopped));
-        }
-    }
+    // public override void _Input(InputEvent @event)
+    // {
+    //     if (@event.IsActionPressed("ui_accept") && _active)
+    //     {
+    //         _active = false;
+    //         EmitSignal(nameof(PinStopped));
+    //     }
+
+    //     @event.Dispose(); // Prevents leak
+    // }
+
+    // public override void _Process(double delta)
+    // {
+    //     base._Process(delta);
+
+    //     if (Input.IsActionJustPressed("ui_accept") && _active)
+    //     {
+    //         _active = false;
+    //         EmitSignal(nameof(PinStopped));
+    //     }
+    // }
 
     public void EnablePin()
     {
@@ -49,6 +62,13 @@ public partial class Pin : Area2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+        if (Input.IsActionJustPressed("ui_accept") && _active)
+        {
+            _active = false;
+            EmitSignal(nameof(PinStopped));
+            return;
+        }
+
 		if (_active) MovePin((float)delta);
     }
 
