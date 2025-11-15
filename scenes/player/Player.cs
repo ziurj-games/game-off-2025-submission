@@ -12,6 +12,9 @@ public partial class Player : Actionable
     [Signal]
     private delegate void GeneratedWaveResEventHandler();
 
+    [Export]
+    private WaveSliderValues _normalWaveValues, _royalWaveValues, _enthusiasticWaveValues, _fingerWiggleWaveValues;
+
     public override void _Ready()
     {
         base._Ready();
@@ -37,15 +40,19 @@ public partial class Player : Actionable
         {
             case Wave.NormalWave:
                 selectedWave = Wave.NormalWave;
+                _targetSlider.UpdateTargetSlider(_normalWaveValues);
                 break;
             case Wave.RoyalWave:
                 selectedWave = Wave.RoyalWave;
+                _targetSlider.UpdateTargetSlider(_royalWaveValues);
                 break;
             case Wave.EnthusiasticWave:
                 selectedWave = Wave.EnthusiasticWave;
+                _targetSlider.UpdateTargetSlider(_enthusiasticWaveValues);
                 break;
             case Wave.FingerWiggleWave:
                 selectedWave = Wave.FingerWiggleWave;
+                _targetSlider.UpdateTargetSlider(_fingerWiggleWaveValues);
                 break;
             default:
                 GD.PrintErr("[Player.cs] ERROR: NOT A PROPER WAVE");
@@ -55,14 +62,15 @@ public partial class Player : Actionable
         EnableWaveOptionsInterface(false);
 
         EnableSliderInterface();
+
         _targetSlider.Enable();
 
         // Wait for the slider process to finish (this pauses until SliderStopped is emitted)
         await UpdateAndEmitWaveResourceAsync(selectedWave);
 
+        await ToSignal(GetTree().CreateTimer(2), "timeout");
         EnableSliderInterface(false);
         _targetSlider.Reset();
-
     }
 
     private async Task UpdateAndEmitWaveResourceAsync(string selectedWave)
@@ -79,6 +87,7 @@ public partial class Player : Actionable
             waveResource.WaveType = selectedWave;
             EmitSignal(nameof(TurnSignal), [ waveResource ]);
             GD.PrintS($"[UPDATE EMIT] WAVE RESOURCE: {waveResource.WaveType} // {waveResource.TargetSliderFinalValue} ");
+            // _targetSlider.UpdateTargetSlider(selectedWave);
         }
     }
 

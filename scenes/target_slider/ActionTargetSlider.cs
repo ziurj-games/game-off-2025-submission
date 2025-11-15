@@ -15,8 +15,12 @@ public partial class ActionTargetSlider : Node2D
     [Export]
     private Pin _pin;
 
+    [Export]
+    private OuterArea _outerArea;
+
     [Signal]
     public delegate void SliderStoppedEventHandler(int value);
+
 
     public override void _Ready()
     {
@@ -30,6 +34,13 @@ public partial class ActionTargetSlider : Node2D
 
         GD.PrintS($"PIN STOPPED {lockedPinPosition}");
         EmitSignal(nameof(SliderStopped), lockedPinPosition);
+    }
+
+    public void UpdateTargetSlider(WaveSliderValues sliderValues)
+    {
+        _outerArea.UpdateSpriteSize(sliderValues.OuterWidthScale);
+        _pin.PinSpeed = sliderValues.PinSpeed;
+        _outerArea.UpdateOuterAreaOrigin(sliderValues.OuterPosition, sliderValues.OuterPositionVariance);
     }
 
     public void Enable()
@@ -53,7 +64,15 @@ public partial class ActionTargetSlider : Node2D
     private void AreaExitedSweetSpot(Area2D area)
     {
         // GD.Print("EXITED THE SWEET SPOT");
-        currentPinPosition = PinPosition.IN_OUTER_AREA;
+        if (_outerArea.IsCollisionScaleZero())
+        {
+            currentPinPosition = PinPosition.IN_GRAY_AREA;
+            GD.Print("GRAY");
+        } else 
+        {
+            currentPinPosition = PinPosition.IN_OUTER_AREA;
+            GD.Print("OUTER");
+        }
         // GD.PrintS($"{currentPinPosition}");
     }
 
