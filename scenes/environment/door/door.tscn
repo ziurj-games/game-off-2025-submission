@@ -1,0 +1,87 @@
+[gd_scene load_steps=9 format=3 uid="uid://c26tpy8hjf2oe"]
+
+[ext_resource type="Script" uid="uid://c0hah6nlueu43" path="res://scenes/environment/door/Door.cs" id="1_r5seb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wg11f"]
+size = Vector3(2, 3.5, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yb8kn"]
+albedo_color = Color(0.599985, 0.6184497, 0.61393696, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_43k3a"]
+material = SubResource("StandardMaterial3D_yb8kn")
+radius = 0.167
+height = 0.333
+
+[sub_resource type="Animation" id="Animation_2jnv8"]
+resource_name = "open_door"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(-5, -5),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -1.5707964, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_r5seb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_s6om1"]
+resource_name = "close_door"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(-5, -5),
+"update": 0,
+"values": [Vector3(0, -1.5707964, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s6om1"]
+_data = {
+&"RESET": SubResource("Animation_r5seb"),
+&"close_door": SubResource("Animation_s6om1"),
+&"open_door": SubResource("Animation_2jnv8")
+}
+
+[node name="Door" type="Node3D" node_paths=PackedStringArray("_animationPlayer")]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("1_r5seb")
+_animationPlayer = NodePath("Door/AnimationPlayer")
+
+[node name="Door" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.685, 0)
+mesh = SubResource("BoxMesh_wg11f")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.71369827, -0.0791657, 0.11147076)
+mesh = SubResource("SphereMesh_43k3a")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Door"]
+libraries = {
+&"": SubResource("AnimationLibrary_s6om1")
+}
