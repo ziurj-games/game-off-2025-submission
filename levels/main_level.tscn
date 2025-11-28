@@ -1,26 +1,32 @@
-[gd_scene load_steps=19 format=3 uid="uid://dapqwdtrxrenp"]
+[gd_scene load_steps=31 format=3 uid="uid://dapqwdtrxrenp"]
 
 [ext_resource type="PackedScene" uid="uid://bwxdkrw6bj522" path="res://scenes/player/player.tscn" id="1_0vhbo"]
 [ext_resource type="Script" uid="uid://be5h2sreik2kj" path="res://scripts/GameManager.cs" id="1_ldao0"]
 [ext_resource type="PackedScene" uid="uid://cwfaw2e74004j" path="res://scenes/npc/npc.tscn" id="2_0vhbo"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_55n5f"]
-size = Vector3(400, 400, 0.5)
+[ext_resource type="PackedScene" uid="uid://c26tpy8hjf2oe" path="res://scenes/environment/door/door.tscn" id="4_55n5f"]
+[ext_resource type="AudioStream" uid="uid://bxhxk2l5ajei7" path="res://audio/ambience/Factory Cellar.wav" id="5_wg11f"]
+[ext_resource type="Script" uid="uid://c7gqbs71hfb1k" path="res://levels/MainMenu.cs" id="6_yb8kn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ilwad"]
+size = Vector3(3.08, 0.12, 1.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ttu8v"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.55958563, 0.34557128, 0.20222801, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_43k3a"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ggk2x"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.57700837, 0.5770084, 0.57700837, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_0vhbo"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_wg11f"]
-size = Vector3(2, 3.5, 0.5)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yb8kn"]
-albedo_color = Color(0.599985, 0.6184497, 0.61393696, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_43k3a"]
-material = SubResource("StandardMaterial3D_yb8kn")
-radius = 0.167
-height = 0.333
+[sub_resource type="BoxMesh" id="BoxMesh_43k3a"]
+size = Vector3(0.1, 0.79, 0.1)
 
 [sub_resource type="Environment" id="Environment_ilwad"]
 tonemap_mode = 4
@@ -49,12 +55,18 @@ emission_energy_multiplier = 10.35
 [sub_resource type="SphereMesh" id="SphereMesh_ldao0"]
 material = SubResource("StandardMaterial3D_ldao0")
 
+[sub_resource type="BoxMesh" id="BoxMesh_55n5f"]
+size = Vector3(400, 400, 0.5)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0vhbo"]
 albedo_color = Color(0.40392157, 0.40392157, 0.40392157, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_68ya3"]
 material = SubResource("StandardMaterial3D_0vhbo")
 size = Vector3(20, 40, 0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wg11f"]
+data = PackedVector3Array(-10, 20, 0.25, 10, 20, 0.25, -10, -20, 0.25, 10, 20, 0.25, 10, -20, 0.25, -10, -20, 0.25, 10, 20, -0.25, -10, 20, -0.25, 10, -20, -0.25, -10, 20, -0.25, -10, -20, -0.25, 10, -20, -0.25, 10, 20, 0.25, 10, 20, -0.25, 10, -20, 0.25, 10, 20, -0.25, 10, -20, -0.25, 10, -20, 0.25, -10, 20, -0.25, -10, 20, 0.25, -10, -20, -0.25, -10, 20, 0.25, -10, -20, 0.25, -10, -20, -0.25, 10, 20, 0.25, -10, 20, 0.25, 10, 20, -0.25, -10, 20, 0.25, -10, 20, -0.25, 10, 20, -0.25, -10, -20, 0.25, 10, -20, 0.25, -10, -20, -0.25, 10, -20, 0.25, 10, -20, -0.25, -10, -20, -0.25)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wg11f"]
 albedo_color = Color(0.11373039, 0.18633118, 0.059778437, 1)
@@ -70,24 +82,184 @@ albedo_color = Color(0.7977205, 0.86698216, 0.7396099, 1)
 material = SubResource("StandardMaterial3D_43k3a")
 size = Vector3(20, 4, 0.5)
 
-[node name="MainLevel" type="Node3D" node_paths=PackedStringArray("_playerSpawnPos", "_npcSpawnPos", "_playersContainer")]
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_wg11f"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 0.01
+dof_blur_far_transition = -1.0
+dof_blur_amount = 0.17
+
+[sub_resource type="Animation" id="Animation_ttu8v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 2, 5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:attributes:dof_blur_amount")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.17]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:fov")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [60.0]
+}
+
+[sub_resource type="Animation" id="Animation_43k3a"]
+resource_name = "move_to_chair"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.9666667),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 2, 5), Vector3(0, 2, 1.724)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:attributes:dof_blur_amount")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.9666667),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [0.17, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:fov")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.0333333, 1.9666667),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [60.0, 75.0]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"GameStart"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ggk2x"]
+_data = {
+&"RESET": SubResource("Animation_ttu8v"),
+&"move_to_chair": SubResource("Animation_43k3a")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wg11f"]
+bg_color = Color(0.11858138, 0.11858139, 0.11858132, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yb8kn"]
+bg_color = Color(0.19076243, 0.19076231, 0.19076231, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_43k3a"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[node name="MainLevel" type="Node3D" node_paths=PackedStringArray("_playerSpawnPos", "_npcSpawnPos", "_playersContainer", "_pathFollowingSc")]
 script = ExtResource("1_ldao0")
 _playerScene = ExtResource("1_0vhbo")
 _npcScene = ExtResource("2_0vhbo")
 _playerSpawnPos = NodePath("RoomElements/PlayerSpawnPosition")
-_npcSpawnPos = NodePath("RoomElements/Chair3/NPCSitPosition")
+_npcSpawnPos = NodePath("RoomElements/NPCSpawnPosition")
 _playersContainer = NodePath("Players")
-
-[node name="SkyBlocker" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 184.65707, 0)
-mesh = SubResource("BoxMesh_55n5f")
+_pathFollowingSc = NodePath("")
 
 [node name="RoomElements" type="Node3D" parent="."]
 
 [node name="Table" type="MeshInstance3D" parent="RoomElements"]
-transform = Transform3D(3.0800002, 0, 0, 0, 0.12, 0, 0, 0, 1.1, 0, 1.1619225, 0.112627506)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1619225, 0.112627506)
 mesh = SubResource("BoxMesh_ilwad")
 skeleton = NodePath("../../RoomShape")
+surface_material_override/0 = SubResource("StandardMaterial3D_ttu8v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomElements/Table"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3678358, -0.74951756, -0.36685288)
+mesh = SubResource("CylinderMesh_43k3a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ggk2x")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="RoomElements/Table"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3678358, -0.74951756, 0.37569308)
+mesh = SubResource("CylinderMesh_43k3a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ggk2x")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="RoomElements/Table"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3548326, -0.74951756, 0.37569308)
+mesh = SubResource("CylinderMesh_43k3a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ggk2x")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="RoomElements/Table"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3548326, -0.74951756, -0.37127274)
+mesh = SubResource("CylinderMesh_43k3a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ggk2x")
 
 [node name="Chair3" type="Node3D" parent="RoomElements"]
 
@@ -104,6 +276,26 @@ transform = Transform3D(0.8316, 0, 0, 0, -0.012198595, 0.9923824, 0, -0.12369941
 mesh = SubResource("BoxMesh_0vhbo")
 skeleton = NodePath("../../../RoomShape")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomElements/Chair3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28633356, 0.12800622, -0.8772855)
+mesh = SubResource("BoxMesh_43k3a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ggk2x")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="RoomElements/Chair3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.29451418, 0.12800622, -0.8772855)
+mesh = SubResource("BoxMesh_43k3a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ggk2x")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="RoomElements/Chair3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.29451418, 0.12800622, -1.3599621)
+mesh = SubResource("BoxMesh_43k3a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ggk2x")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="RoomElements/Chair3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.26997232, 0.12800622, -1.3599621)
+mesh = SubResource("BoxMesh_43k3a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ggk2x")
+
 [node name="NPCSpawnPosition" type="Marker3D" parent="RoomElements"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
 
@@ -113,18 +305,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1.7238412)
 [node name="DummyCamera" type="Camera3D" parent="RoomElements/PlayerSpawnPosition"]
 fov = 90.0
 
-[node name="Door" type="MeshInstance3D" parent="RoomElements"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6854868, -10.134851)
-mesh = SubResource("BoxMesh_wg11f")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomElements/Door"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.71369827, -0.0791657, 0.25933933)
-mesh = SubResource("SphereMesh_43k3a")
+[node name="Door" parent="RoomElements" instance=ExtResource("4_55n5f")]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, -1, 0, -10.070623)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="RoomElements"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10.617548, 0)
 light_color = Color(0.7524817, 0.71614987, 0.6533866, 1)
-light_energy = 7.598
+light_energy = 7.5
 shadow_enabled = true
 shadow_blur = 0.175
 spot_range = 14.998
@@ -135,8 +322,14 @@ spot_angle = 52.09
 environment = SubResource("Environment_ilwad")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RoomElements"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.7115364, -3.650736)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6373272, 2.7115364, -3.8377068)
 mesh = SubResource("SphereMesh_ldao0")
+
+[node name="SkyBlocker" type="MeshInstance3D" parent="RoomElements"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 184.65707, 0)
+visible = false
+mesh = SubResource("BoxMesh_55n5f")
+skeleton = NodePath("../..")
 
 [node name="RoomShape" type="Node3D" parent="."]
 
@@ -144,6 +337,10 @@ mesh = SubResource("SphereMesh_ldao0")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.2530899, -7)
 mesh = SubResource("BoxMesh_68ya3")
 skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomShape"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.2530899, -7)
+shape = SubResource("ConcavePolygonShape3D_wg11f")
 
 [node name="Ceiling" type="MeshInstance3D" parent="RoomShape"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 7.74691, 0)
@@ -201,4 +398,81 @@ skeleton = NodePath("../../..")
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7057595, 0)
 visible = false
-omni_range = 12.076107
+omni_range = 12.0
+
+[node name="Ambience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_wg11f")
+volume_db = -20.484
+autoplay = true
+
+[node name="MainMenu" type="Node" parent="." node_paths=PackedStringArray("_cameraAnimationPlayer", "_mainMenuInterface")]
+script = ExtResource("6_yb8kn")
+_cameraAnimationPlayer = NodePath("Node3D/MainMenuCamera/AnimationPlayer")
+_mainMenuInterface = NodePath("MainMenuInterface")
+
+[node name="Node3D" type="Node3D" parent="MainMenu"]
+
+[node name="MainMenuCamera" type="Camera3D" parent="MainMenu/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
+cull_mask = 1047551
+attributes = SubResource("CameraAttributesPractical_wg11f")
+current = true
+fov = 60.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MainMenu/Node3D/MainMenuCamera"]
+libraries = {
+&"": SubResource("AnimationLibrary_ggk2x")
+}
+
+[node name="MainMenuInterface" type="Control" parent="MainMenu"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/MainMenuInterface"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -93.0
+offset_top = -334.0
+offset_right = 93.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 12
+
+[node name="PlayButton" type="Button" parent="MainMenu/MainMenuInterface/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_wg11f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yb8kn")
+theme_override_styles/focus = SubResource("StyleBoxFlat_43k3a")
+text = "PLAY"
+
+[node name="SettingsButton" type="Button" parent="MainMenu/MainMenuInterface/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_wg11f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yb8kn")
+theme_override_styles/focus = SubResource("StyleBoxFlat_43k3a")
+text = "SETTINGS"
+
+[node name="ExitButton" type="Button" parent="MainMenu/MainMenuInterface/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_wg11f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yb8kn")
+theme_override_styles/focus = SubResource("StyleBoxFlat_43k3a")
+text = "EXIT"
+
+[connection signal="pressed" from="MainMenu/MainMenuInterface/VBoxContainer/PlayButton" to="MainMenu" method="_on_play_button_pressed"]
+[connection signal="pressed" from="MainMenu/MainMenuInterface/VBoxContainer/ExitButton" to="MainMenu" method="_on_exit_button_pressed"]
