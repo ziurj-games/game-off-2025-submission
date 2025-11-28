@@ -15,4 +15,14 @@ public partial class Door : Node3D
 	{
         _animationPlayer.Play("close_door");
     }
+
+    private void _on_body_entered(Node3D area)
+    {
+        OpenDoor();
+    }
+
+    private void _on_body_exited(Node3D area)
+    {
+        CloseDoor();
+    }
 }
