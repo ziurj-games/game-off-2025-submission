@@ -11,9 +11,9 @@ public partial class Wave : Resource
     [Export(PropertyHint.Enum, "Normal Wave,Royal Wave,Enthusiastic Wave,Finger Wiggle Wave")]
 	public string WaveType { get; set; }
 
-    // 2 = gray area
+    // 0 = gray area
     // 1 = outer area
-    // 0 = sweet spot
+    // 2 = sweet spot
     [Export]
     public int TargetSliderFinalValue = 0; 
 }

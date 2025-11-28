@@ -5,9 +5,9 @@ public partial class ActionTargetSlider : Node2D
 {
     enum PinPosition
     {
-        IN_SWEET_SPOT,
+        IN_GRAY_AREA,
         IN_OUTER_AREA,
-        IN_GRAY_AREA
+        IN_SWEET_SPOT
     };
 
     private PinPosition currentPinPosition = PinPosition.IN_GRAY_AREA;
@@ -67,11 +67,11 @@ public partial class ActionTargetSlider : Node2D
         if (_outerArea.IsCollisionScaleZero())
         {
             currentPinPosition = PinPosition.IN_GRAY_AREA;
-            GD.Print("GRAY");
+            // GD.Print("GRAY");
         } else 
         {
             currentPinPosition = PinPosition.IN_OUTER_AREA;
-            GD.Print("OUTER");
+            // GD.Print("OUTER");
         }
         // GD.PrintS($"{currentPinPosition}");
     }
