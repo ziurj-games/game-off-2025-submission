@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwfaw2e74004j"]
+[gd_scene load_steps=12 format=3 uid="uid://cwfaw2e74004j"]
 
 [ext_resource type="Script" uid="uid://b4lh0i0o5rth7" path="res://scenes/npc/NPC.cs" id="1_sspvn"]
 [ext_resource type="Resource" uid="uid://2qe5thd6scu3" path="res://resources/wave/wave_res.tres" id="2_pcwmf"]
@@ -13,7 +13,125 @@ albedo_color = Color(0, 0, 0, 1)
 material = SubResource("StandardMaterial3D_ilwad")
 size = Vector3(0.5, 0.1, 0.1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0vhbo"]
+[sub_resource type="Animation" id="Animation_r4bp4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dpyoa"]
+resource_name = "move_to_chair"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.93333334, 1.1666666, 1.6, 1.9666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -15), Vector3(0, 0, -7), Vector3(1, 0, -6), Vector3(2, 0, -3), Vector3(0, 0, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.9, 0.9666667, 1.1333333, 1.2, 1.6, 1.7, 1.9, 1.9666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0.43633232, 0), Vector3(0, 0.43633232, 0), Vector3(0, 0.2617994, 0), Vector3(0, 0.2617994, 0), Vector3(0, -0.7853982, 0), Vector3(0, -0.7853982, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"EmitNPCReachedSignal"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_woxlu"]
+resource_name = "move_to_spawn_pos"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.4333333, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -1), Vector3(2, 0, -3), Vector3(0, 0, -7), Vector3(0, 0, -15)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.73333335, 0.8000001, 0.9666667, 1.0333334, 1.4666666, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 2.443461, 0), Vector3(0, 2.443461, 0), Vector3(0, 3.9269907, 0), Vector3(0, 3.9269907, 0), Vector3(0, 3.9269907, 0), Vector3(0, 3.8397243, 0), Vector3(0, 3.1415927, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"EmitNPCDeletedSignal"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_woxlu"]
+_data = {
+&"RESET": SubResource("Animation_r4bp4"),
+&"move_to_chair": SubResource("Animation_dpyoa"),
+&"move_to_spawn_pos": SubResource("Animation_woxlu")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dpyoa"]
 
 [node name="NPC" type="CharacterBody3D"]
 script = ExtResource("1_sspvn")
@@ -27,9 +145,16 @@ mesh = SubResource("CapsuleMesh_ilwad")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5850501, 0.49247885)
 mesh = SubResource("BoxMesh_ldao0")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_0vhbo")
-
 [node name="HealthBar" parent="." instance=ExtResource("3_dpyoa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4204588, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_woxlu")
+}
+autoplay = "move_to_chair"
+speed_scale = 0.75
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_dpyoa")

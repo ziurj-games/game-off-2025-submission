@@ -3,6 +3,12 @@ using Godot;
 
 public partial class NPC : Actionable
 {
+    [Signal]
+    public delegate void NPCReachedTargetEventHandler();
+
+    [Signal]
+    public delegate void NPCDeletedEventHandler();
+    
     public async void ChooseWave()
     {
         // Little buffer before choosing an option.
@@ -37,5 +43,16 @@ public partial class NPC : Actionable
             waveResource.WaveType = selectedWave;
             EmitSignal(nameof(TurnSignal), [ waveResource ]);
         }
+    }
+
+    public void EmitNPCReachedSignal()
+    {
+        EmitSignal(nameof(NPCReachedTarget));
+    }
+
+    public void EmitNPCDeletedSignal()
+    {
+        EmitSignal(nameof(NPCDeleted));
+        QueueFree();
     }
 }
