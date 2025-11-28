@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bxhxk2l5ajei7"
+path="res://.godot/imported/Factory Cellar.wav-30b947229deed30e1646379f627f0a12.sample"
+
+[deps]
+
+source_file="res://audio/ambience/Factory Cellar.wav"
+dest_files=["res://.godot/imported/Factory Cellar.wav-30b947229deed30e1646379f627f0a12.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
