@@ -15,12 +15,13 @@ size = Vector2(170, 66)
 size = Vector2(27, 102)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_42uq2"]
-radius = 11.8
+radius = 5.51001
 height = 146.0
 
-[node name="ActiveTargetSlider" type="Node2D" node_paths=PackedStringArray("_pin")]
+[node name="ActiveTargetSlider" type="Node2D" node_paths=PackedStringArray("_pin", "_outerArea")]
 script = ExtResource("1_ubvx2")
 _pin = NodePath("Pin")
+_outerArea = NodePath("OuterArea")
 
 [node name="Bar" type="Sprite2D" parent="."]
 texture = ExtResource("1_w1pmy")
@@ -58,6 +59,7 @@ _leftLimit = NodePath("../LeftLimit")
 _rightLimit = NodePath("../RightLimit")
 
 [node name="Sprite2D" type="Sprite2D" parent="Pin"]
+scale = Vector2(0.5, 1)
 texture = ExtResource("2_jba3m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pin"]
