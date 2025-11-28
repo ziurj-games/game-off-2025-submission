@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwxdkrw6bj522"]
+[gd_scene load_steps=10 format=3 uid="uid://bwxdkrw6bj522"]
 
 [ext_resource type="Script" uid="uid://b6eel8rmihksv" path="res://scenes/player/Player.cs" id="1_8afob"]
 [ext_resource type="Resource" uid="uid://2qe5thd6scu3" path="res://resources/wave/wave_res.tres" id="2_dovo2"]
+[ext_resource type="Resource" uid="uid://b7gracjq6t3o7" path="res://resources/wave_slider_values/normal_wave_values.tres" id="2_qek5x"]
+[ext_resource type="Resource" uid="uid://bbbxku53w4jdo" path="res://resources/wave_slider_values/royal_wave_values.tres" id="3_5gtgg"]
 [ext_resource type="CameraAttributesPractical" uid="uid://c544b0kf346dp" path="res://scenes/player/camera_attributes.tres" id="3_gmlin"]
+[ext_resource type="Resource" uid="uid://fo0ptgeqp4c3" path="res://resources/wave_slider_values/enthusiastic_wave_values.tres" id="4_h17s1"]
 [ext_resource type="PackedScene" uid="uid://dpba7c58hbkre" path="res://scenes/target_slider/target_slider.tscn" id="4_lvxji"]
+[ext_resource type="Resource" uid="uid://blrr3ia6surdt" path="res://resources/wave_slider_values/wiggle_wave_values.tres" id="5_je7p5"]
+[ext_resource type="PackedScene" uid="uid://dfvi8klt5lnna" path="res://scenes/health_bar/health_bar.tscn" id="9_5gtgg"]
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_playerInterface", "_waveOptionsContainer", "_targetSliderContainer", "_targetSlider")]
 script = ExtResource("1_8afob")
@@ -11,11 +16,14 @@ _playerInterface = NodePath("PlayerInterface")
 _waveOptionsContainer = NodePath("PlayerInterface/WaveOptionContainer")
 _targetSliderContainer = NodePath("PlayerInterface/TargetSliderContainer")
 _targetSlider = NodePath("PlayerInterface/TargetSliderContainer/ActiveTargetSlider")
+_normalWaveValues = ExtResource("2_qek5x")
+_royalWaveValues = ExtResource("3_5gtgg")
+_enthusiasticWaveValues = ExtResource("4_h17s1")
+_fingerWiggleWaveValues = ExtResource("5_je7p5")
 WaveRes = ExtResource("2_dovo2")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 attributes = ExtResource("3_gmlin")
-current = true
 fov = 90.0
 
 [node name="PlayerInterface" type="Control" parent="."]
@@ -75,6 +83,9 @@ grow_vertical = 2
 
 [node name="ActiveTargetSlider" parent="PlayerInterface/TargetSliderContainer" instance=ExtResource("4_lvxji")]
 position = Vector2(987, 433)
+
+[node name="HealthBar" parent="." instance=ExtResource("9_5gtgg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6857041, -1.1514308)
 
 [connection signal="pressed" from="PlayerInterface/WaveOptionContainer/NormalWaveButton" to="." method="ButtonPressed" binds= ["Normal Wave"]]
 [connection signal="pressed" from="PlayerInterface/WaveOptionContainer/RoyalWaveButton" to="." method="ButtonPressed" binds= ["Royal Wave"]]

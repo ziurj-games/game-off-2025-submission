@@ -15,6 +15,9 @@ public partial class Player : Actionable
     [Export]
     private WaveSliderValues _normalWaveValues, _royalWaveValues, _enthusiasticWaveValues, _fingerWiggleWaveValues;
 
+    [Export]
+    private float _disableSliderTime = 1.0f;
+
     public override void _Ready()
     {
         base._Ready();
@@ -68,7 +71,7 @@ public partial class Player : Actionable
         // Wait for the slider process to finish (this pauses until SliderStopped is emitted)
         await UpdateAndEmitWaveResourceAsync(selectedWave);
 
-        await ToSignal(GetTree().CreateTimer(2), "timeout");
+        await ToSignal(GetTree().CreateTimer(_disableSliderTime), "timeout");
         EnableSliderInterface(false);
         _targetSlider.Reset();
     }
